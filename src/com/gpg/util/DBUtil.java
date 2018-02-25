@@ -24,15 +24,14 @@ public class DBUtil {
 	 */
 	public static Connection getConnection() {
 		Connection conn = LOCAL.get();
-		if (conn != null) {
-			return conn;
-		}
 		try {
-			conn = dataSource.getConnection();
+			if (null == conn || conn.isClosed()) {
+				conn = dataSource.getConnection();
+			}
+			LOCAL.set(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		LOCAL.set(conn);
 		return conn;
 	}
 
