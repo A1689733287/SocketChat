@@ -3,9 +3,6 @@ package com.gpg.server;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.swing.plaf.basic.BasicBorders.SplitPaneBorder;
-
 import java.util.Set;
 
 public class ChatManager {
@@ -25,16 +22,19 @@ public class ChatManager {
 	 * @param sockerThtead 消息线程
 	 */
 	public void add(String name, Thread sockerThtead) {
-		map.put(name, sockerThtead);
+		getMap().put(name, sockerThtead);
+		System.out.println(map.size());
 	}
 	
 	/**
 	 * 移除线程
 	 * @param cs
 	 */
-	public void remove (ChatSocket cs) {
-		map.remove(cs);
+	public void remove (String key) {
+		getMap().remove(key);
+		
 	}
+	
 
 	/**
 	 * 发送消息
@@ -42,7 +42,7 @@ public class ChatManager {
 	 * @param msg 发送的消息
 	 */
 	public void out(ChatSocket cs, String msg) {
-		Set<Entry<String, Thread>> entrySet = map.entrySet();
+		Set<Entry<String, Thread>> entrySet = getMap().entrySet();
 		for (Entry<String, Thread> entry : entrySet) {
 			ChatSocket csTemp = (ChatSocket) entry.getValue();
 			System.out.println(csTemp);
@@ -57,18 +57,19 @@ public class ChatManager {
 	 * 发送消息
 	 * @param cs 发送消息线程
 	 * @param msg 传递的消息
-	 * @param regix 进行验证
+	 * @param regix 进行验证@
 	 */
 	public void out(ChatSocket cs, String msg, String regix) {
 		boolean flag = false;
-		Set<String> keySet = map.keySet();
+		Set<String> keySet = getMap().keySet();
 		for (String string : keySet) {
 			if (msg.contains(regix + string)) {
 				flag = true;
-				cs = (ChatSocket) map.get(string);
+				cs = (ChatSocket) getMap().get(string);
 				String[] split = msg.split(regix);
 				msg = split[0]
-						+ msg.substring(msg.indexOf(regix) + (msg.indexOf(regix) + string).length() + 1, msg.length());
+						+ msg.substring(msg.indexOf(regix) + (regix + string).length(), msg.length());
+				System.out.println(msg.indexOf(regix) + (regix + string).length() + 1);
 			}
 		}
 		if (flag) {
@@ -83,13 +84,21 @@ public class ChatManager {
 	 * @return 返回key值
 	 */
 	public String getKey(ChatSocket cs) {
-		Set<String> keySet = map.keySet();
+		Set<String> keySet = getMap().keySet();
 		for (String string : keySet) {
-			if (map.get(string).equals(cs)) {
+			if (getMap().get(string).equals(cs)) {
 				return string;
 			}
 		}
 		return null;
+	}
+
+	public Map<String, Thread> getMap() {
+		return map;
+	}
+
+	public void setMap(Map<String, Thread> map) {
+		this.map = map;
 	}
 
 }

@@ -33,6 +33,7 @@ public class SocketListenner extends Thread {
 				window.listModel.addElement(split[0]);
 				window.getJTextArea0().append(line + "已连接!\r\n");
 				ChatManager.getChatManager().add(split[0], cs);
+				
 			}
 		} catch (Exception e) {
 

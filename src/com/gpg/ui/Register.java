@@ -155,7 +155,9 @@ public class Register extends JFrame {
 
 	private void registerMouseMouseReleased(MouseEvent event) {
 		String userName = userNameText.getText();
+		@SuppressWarnings("deprecation")
 		String userPwd_1 = RSAUtil.encrypt(userPwdText.getText());
+		@SuppressWarnings("deprecation")
 		String userPwd_2 = RSAUtil.encrypt(userPwdText_1.getText());
 		if (!(userName.trim().isEmpty() || userPwd_1.trim().isEmpty() || userPwd_2.trim().isEmpty())) {
 			if (MyUtil.checkPwd(userPwd_1, userPwd_2)) {

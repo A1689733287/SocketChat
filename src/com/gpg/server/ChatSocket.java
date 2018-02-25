@@ -43,13 +43,14 @@ public class ChatSocket extends Thread {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private String readLine() {
 		try {
 			return br.readLine();
 		} catch (IOException e) {
-			ChatManager.getChatManager().remove(this);
 			window.listModel.removeElement(ChatManager.getChatManager().getKey(this));
 			window.getJTextArea0().append(ChatManager.getChatManager().getKey(this) + "已断开!\r\n");
+			ChatManager.getChatManager().remove(ChatManager.getChatManager().getKey(this));
 			try {
 				this.socket.close();
 				this.stop();
