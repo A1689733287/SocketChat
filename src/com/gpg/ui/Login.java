@@ -147,22 +147,22 @@ public class Login extends JFrame {
 		@SuppressWarnings("deprecation")
 		String userPwd = RSAUtil.encrypt(userPwdText.getText());
 		if (!(userName.trim().isEmpty() || userPwd.trim().isEmpty())) {
-			User user = new User(0, userName, userPwd);
-			if (check(user)) {
-				this.setVisible(false);
-				SwingUtilities.invokeLater(new Runnable() {
+				User user = new User(0, userName, userPwd);
+				if (check(user)) {
+					this.setVisible(false);
+					SwingUtilities.invokeLater(new Runnable() {
 
-					@Override
-					public void run() {
-						ChatClient client = new ChatClient();
-						client.getJLabel3().setText(userName);
-						client.setVisible(true);
-						ChatUtil.getInstance().setWindow(client);
-					}
-				});
-			} else {
-				JOptionPane.showMessageDialog(null, "用户名或密码不正确！");
-			}
+						@Override
+						public void run() {
+							ChatClient client = new ChatClient();
+							client.getJLabel3().setText(userName);
+							client.setVisible(true);
+							ChatUtil.getInstance().setWindow(client);
+						}
+					});
+				} else {
+					JOptionPane.showMessageDialog(null, "用户名或密码不正确！");
+				}
 		} else {
 			JOptionPane.showMessageDialog(null, "用户名或密码不能为空！");
 		}

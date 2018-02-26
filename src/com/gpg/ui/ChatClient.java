@@ -188,9 +188,7 @@ public class ChatClient extends JFrame {
 	}
 
 	private void exitBtnMouseMouseReleased(MouseEvent event) {
-		MainScreen mainScreen = new MainScreen();
-		this.setVisible(false);
-		mainScreen.setVisible(true);
+		System.exit(0);
 	}
 
 	private void conBtnMouseMouseReleased(MouseEvent event) {

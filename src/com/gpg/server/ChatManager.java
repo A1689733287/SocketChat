@@ -16,30 +16,37 @@ public class ChatManager {
 	public static ChatManager getChatManager() {
 		return instance;
 	}
+
 	/**
 	 * 发消息线程添加到集合当中
-	 * @param name 线程的名字
-	 * @param sockerThtead 消息线程
+	 * 
+	 * @param name
+	 *            线程的名字
+	 * @param sockerThtead
+	 *            消息线程
 	 */
 	public void add(String name, Thread sockerThtead) {
 		getMap().put(name, sockerThtead);
 		System.out.println(map.size());
 	}
-	
+
 	/**
 	 * 移除线程
+	 * 
 	 * @param cs
 	 */
-	public void remove (String key) {
+	public void remove(String key) {
 		getMap().remove(key);
-		
+
 	}
-	
 
 	/**
 	 * 发送消息
-	 * @param cs 发送消息的线程
-	 * @param msg 发送的消息
+	 * 
+	 * @param cs
+	 *            发送消息的线程
+	 * @param msg
+	 *            发送的消息
 	 */
 	public void out(ChatSocket cs, String msg) {
 		Set<Entry<String, Thread>> entrySet = getMap().entrySet();
@@ -55,9 +62,13 @@ public class ChatManager {
 
 	/**
 	 * 发送消息
-	 * @param cs 发送消息线程
-	 * @param msg 传递的消息
-	 * @param regix 进行验证@
+	 * 
+	 * @param cs
+	 *            发送消息线程
+	 * @param msg
+	 *            传递的消息
+	 * @param regix
+	 *            进行验证@
 	 */
 	public void out(ChatSocket cs, String msg, String regix) {
 		boolean flag = false;
@@ -67,9 +78,7 @@ public class ChatManager {
 				flag = true;
 				cs = (ChatSocket) getMap().get(string);
 				String[] split = msg.split(regix);
-				msg = split[0]
-						+ msg.substring(msg.indexOf(regix) + (regix + string).length(), msg.length());
-				System.out.println(msg.indexOf(regix) + (regix + string).length() + 1);
+				msg = split[0] + msg.substring(msg.indexOf(regix) + (regix + string).length(), msg.length());
 			}
 		}
 		if (flag) {
@@ -78,9 +87,12 @@ public class ChatManager {
 			out(cs, msg);
 		}
 	}
+
 	/**
 	 * 返回通过value获取map的key值
-	 * @param cs map中的Vlaue值
+	 * 
+	 * @param cs
+	 *            map中的Vlaue值
 	 * @return 返回key值
 	 */
 	public String getKey(ChatSocket cs) {

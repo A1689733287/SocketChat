@@ -11,5 +11,4 @@ public class ServerStartRun {
 		ChatServer chatServer = new ChatServer();
 		chatServer.setVisible(true);
 	}
-
 }
